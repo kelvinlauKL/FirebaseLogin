@@ -1,5 +1,5 @@
 # FirebaseLogin
-Demonstrates a barebones authentication code for Firebase.
+Demonstrates a barebones login screen using [Firebase](https://firebase.google.com). Firebase is a backend solution managed by the folks at Google. This is written in Swift, and would require routine maintenance. Contributions in keeping the syntax up to date is most appreciated.
 
 ![login screen](/Images/screen.png)
 
