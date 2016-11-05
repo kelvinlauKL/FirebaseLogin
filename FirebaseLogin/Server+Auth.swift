@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import FBSDKLoginKit
 
 // MARK: - Authentication
 extension Server {
@@ -17,6 +18,10 @@ extension Server {
   
   static var auth: FIRAuth? {
     return FIRAuth.auth()
+  }
+  
+  static var currentUser: FIRUser? {
+    return FIRAuth.auth()?.currentUser
   }
   
   static func createAccount(withEmail email: String, password: String, completion: @escaping (AuthResponse) -> ()) {
@@ -41,8 +46,24 @@ extension Server {
     }
   }
   
+  static func login(withFacebookToken token: FBSDKAccessToken, completion: @escaping (AuthResponse) -> ()) {
+    let credential = FIRFacebookAuthProvider.credential(withAccessToken: token.tokenString)
+    FIRAuth.auth()?.signIn(with: credential) { user, error in
+      if let error = error {
+        completion(.failure(error.localizedDescription))
+      } else {
+        completion(.success)
+      }
+    }
+  }
+  
   static func logout(completion: @escaping (Bool) -> ()) {
     guard let auth = Server.auth else { return completion(false) }
-    try? auth.signOut()
+    do {
+      try auth.signOut()
+      completion(true)
+    } catch {
+      completion(false)
+    }
   }
 }

@@ -3,4 +3,6 @@ target 'FirebaseLogin' do
 
   # Pods for FirebaseLogin
   pod 'Firebase/Auth'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
 end
